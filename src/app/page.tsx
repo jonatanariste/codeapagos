@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 // Agrega credenciales
 const client = new MercadoPagoConfig({
   accessToken:
-    "TEST-6537649453495569-030314-4c36cfce02b19ac590607a277cd3cf61-1708857327",
+    "APP_USR-8928404133394808-030200-82b0e5e66c5ef336eff7814e687319e3-225552793",
 });
 export default async function Home() {
   async function pagar(formData: FormData) {
