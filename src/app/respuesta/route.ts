@@ -24,8 +24,12 @@ export async function POST(request: NextRequest) {
   //         'content' => http_build_query($data)
   //     )
   // );
-  let elUID = [] as Array;
-  elUID = payment.external_reference?.split(",");
+  let referencias = payment.external_reference;
+  let elUID: String[];
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  elUID = referencias?.split(",");
+
   let datita = {
     texto: "vendido",
     uid: elUID[1],
