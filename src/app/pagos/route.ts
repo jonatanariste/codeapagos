@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
         (datos.producto as string) + "," + (datos.uid as string),
     },
   });
-  redirect(preference.sandbox_init_point!);
+  redirect(preference.init_point!);
 
   return Response.json({ success: true });
 
