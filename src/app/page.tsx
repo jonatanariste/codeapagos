@@ -28,7 +28,7 @@ export default async function Home() {
           (formData.get("uid") as string),
       },
     });
-    redirect(preference.sandbox_init_point!);
+    redirect(preference.init_point!);
   }
 
   return (
