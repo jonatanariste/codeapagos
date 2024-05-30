@@ -8,7 +8,7 @@ const client = new MercadoPagoConfig({
 });
 
 export async function POST(request: NextRequest) {
-  console.log("--------------------------- NE LLAMARON");
+  console.log("--------------------------- ME LLAMARON");
 
   let data = await request.formData();
   const json = JSON.stringify(Object.fromEntries(data));
@@ -25,8 +25,13 @@ export async function POST(request: NextRequest) {
           unit_price: parseInt(datos.precio),
         },
       ],
-      external_reference:
-        (datos.producto as string) + "," + (datos.uid as string),
+      external_reference: datos.producto + "," + datos.uid,
+      back_urls: {
+        success: "https://codearock.com/success",
+        failure: "http://codearock.com/failure",
+        pending: "http://codearock.com/pending",
+      },
+      auto_return: "approved",
     },
   });
   redirect(preference.init_point!);
