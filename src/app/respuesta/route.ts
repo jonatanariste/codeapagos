@@ -13,8 +13,16 @@ export async function POST(request: NextRequest) {
     .then((data) => data as { data: { id: string } });
 
   const payment = await new Payment(mercadopago).get({ id: body.data.id });
+  console.log("--------------------->", payment);
 
-  console.log("--------------------->", payment.external_reference);
+  // console.log("--------------------->", payment.external_reference);
+  // console.log("transaction_amount: ", payment.transaction_amount);
+  // console.log("transaction_details:", payment.transaction_details);
+  // console.log("payment_method_id:", payment.payment_method_id);
+  // console.log("payer identification:", payment.payer);
+  // console.log("date_created:", payment.date_created);
+  //console.log("statement_descriptor:",payment.statement_descriptor)
+
   const url = "https://us-central1-edrfinal.cloudfunctions.net/addVenta";
 
   // $options = array(
@@ -33,7 +41,7 @@ export async function POST(request: NextRequest) {
   let datita = {
     texto: "vendido",
     uid: elUID[1],
-    fecha: "23/3/24",
+    fecha: payment.date_created,
     curso: elUID[0],
     garbage: payment,
   };
