@@ -6,6 +6,7 @@ const mercadopago = new MercadoPagoConfig({
   accessToken:
     "APP_USR-8928404133394808-030200-82b0e5e66c5ef336eff7814e687319e3-225552793",
 });
+const url = "https://us-central1-edrfinal.cloudfunctions.net/addVenta";
 
 async function postData(url = "", data = {}) {
   // Default options are marked with *
@@ -32,7 +33,8 @@ export async function POST(request: NextRequest) {
     .then((data) => data as { data: { id: string } });
 
   const payment = await new Payment(mercadopago).get({ id: body.data.id });
-  console.log("--------------------->", payment);
+
+  //console.log("--------------------->", payment);
 
   // console.log("--------------------->", payment.external_reference);
   // console.log("transaction_amount: ", payment.transaction_amount);
@@ -42,15 +44,6 @@ export async function POST(request: NextRequest) {
   // console.log("date_created:", payment.date_created);
   //console.log("statement_descriptor:",payment.statement_descriptor)
 
-  const url = "https://us-central1-edrfinal.cloudfunctions.net/addVenta";
-
-  // $options = array(
-  //     'http' => array(
-  //         'header'  => "Content-type: application/x-www-form-urlencoded",
-  //         'method'  => 'POST',
-  //         'content' => http_build_query($data)
-  //     )
-  // );
   let referencias = payment.external_reference;
   let elUID: String[];
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -64,16 +57,16 @@ export async function POST(request: NextRequest) {
     curso: elUID[0],
     garbage: payment,
   };
-  if (payment.status == "approved") {
-    postData(url, datita).then((data) => {
-      console.log(
-        "-------------------------------------",
-        "MANDADO",
-        datita.uid,
-        datita.curso
-      ); // JSON data parsed by `data.json()` call
-    });
-  }
+
+  setInterval(() => {
+    console.log("----------setInterval------");
+    if (payment && payment.status == "approved") {
+      postData(url, datita).then((data) => {
+        console.log("-------------------", "MANDADO", datita.uid, datita.curso); // JSON data parsed by `data.json()` call
+      });
+    }
+  }, 1000);
+
   return Response.json({ success: true });
 
   //return Response.json({ success: true });
