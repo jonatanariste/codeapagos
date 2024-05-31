@@ -13,7 +13,6 @@ export async function POST(request: NextRequest) {
   let data = await request.formData();
   const json = JSON.stringify(Object.fromEntries(data));
   const datos = JSON.parse(json);
-  console.log(datos.uid);
 
   const preference = await new Preference(client).create({
     body: {
@@ -25,12 +24,14 @@ export async function POST(request: NextRequest) {
           unit_price: parseInt(datos.precio),
         },
       ],
+
       external_reference: datos.producto + "," + datos.uid,
       back_urls: {
         success: "https://codearock.com/success",
         failure: "http://codearock.com/failure",
         pending: "http://codearock.com/pending",
       },
+      notification_url: "https://codeapagos.vercel.app/respuesta/",
       auto_return: "approved",
     },
   });
