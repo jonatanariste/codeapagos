@@ -7,6 +7,25 @@ const mercadopago = new MercadoPagoConfig({
     "APP_USR-8928404133394808-030200-82b0e5e66c5ef336eff7814e687319e3-225552793",
 });
 
+async function postData(url = "", data = {}) {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+
+      // "Content-Type": "application/x-www-form-urlencoded",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
+  });
+}
+
 export async function POST(request: NextRequest) {
   const body = await request
     .json()
@@ -45,26 +64,7 @@ export async function POST(request: NextRequest) {
     curso: elUID[0],
     garbage: payment,
   };
-  async function postData(url = "", data = {}) {
-    // Default options are marked with *
-    const response = await fetch(url, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
-      headers: {
-        "Content-Type": "application/json",
-
-        // "Content-Type": "application/x-www-form-urlencoded",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: "follow", // manual, *follow, error
-      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
-    });
-  }
-
-  if (payment.status == "approved")
+  if (payment.status == "approved") {
     postData(url, datita).then((data) => {
       console.log(
         "-------------------------------------",
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
         datita.curso
       ); // JSON data parsed by `data.json()` call
     });
-
+  }
   return Response.json({ success: true });
 
   //return Response.json({ success: true });
