@@ -57,13 +57,17 @@ export async function POST(request: NextRequest) {
     curso: elUID[0],
     garbage: payment,
   };
-  setTimeout(() => {
-    if (payment && payment.status == "approved") {
-      postData(url, datita).then((data) => {
-        console.log("-------------------", "MANDADO", datita.uid, datita.curso); // JSON data parsed by `data.json()` call
-      });
-    }
-  }, 1000);
+  console.log("payment.status:", payment.status);
+  if (payment && payment.status == "approved") {
+    postData(url, datita).then((data) => {
+      console.log(
+        "------------------->",
+        "MANDADO A FIREBASE PA",
+        datita.uid,
+        datita.curso
+      ); // JSON data parsed by `data.json()` call
+    });
+  }
 
   return Response.json({ success: true });
 }
