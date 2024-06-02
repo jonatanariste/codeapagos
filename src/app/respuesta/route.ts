@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
 
   const payment = await new Payment(mercadopago).get({ id: body.data.id });
 
-  //console.log("--------------------->", payment);
+  console.log("--------------------->", payment);
 
   // console.log("--------------------->", payment.external_reference);
   // console.log("transaction_amount: ", payment.transaction_amount);
@@ -57,17 +57,13 @@ export async function POST(request: NextRequest) {
     curso: elUID[0],
     garbage: payment,
   };
-
-  setInterval(() => {
-    console.log("----------setInterval------");
+  setTimeout(() => {
     if (payment && payment.status == "approved") {
       postData(url, datita).then((data) => {
         console.log("-------------------", "MANDADO", datita.uid, datita.curso); // JSON data parsed by `data.json()` call
       });
     }
-  }, 1000);
+  }, 3000);
 
   return Response.json({ success: true });
-
-  //return Response.json({ success: true });
 }
