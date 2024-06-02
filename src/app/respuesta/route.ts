@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
         console.log("-------------------", "MANDADO", datita.uid, datita.curso); // JSON data parsed by `data.json()` call
       });
     }
-  }, 3000);
+  }, 1000);
 
   return Response.json({ success: true });
 }
