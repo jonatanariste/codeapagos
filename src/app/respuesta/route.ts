@@ -9,7 +9,7 @@ const mercadopago = new MercadoPagoConfig({
 
 async function postData(url = "", data = {}) {
   // Default options are marked with *
-  console.log("postData-al-servidor", data);
+  console.log("postData-a:", url, data);
   const response = await fetch(url, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
