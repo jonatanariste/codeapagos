@@ -7,9 +7,9 @@ const mercadopago = new MercadoPagoConfig({
     "APP_USR-8928404133394808-030200-82b0e5e66c5ef336eff7814e687319e3-225552793",
 });
 
-async function postData(url = "", data = {}) {
+function postData(url = "", data = {}) {
   console.log("postData Axios:", url);
-  let loqueresulta = await axios
+  let loqueresulta = axios
     .post(url, data)
     .then(function (response) {
       console.log(response.data);
