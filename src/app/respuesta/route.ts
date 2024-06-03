@@ -6,7 +6,6 @@ const mercadopago = new MercadoPagoConfig({
   accessToken:
     "APP_USR-8928404133394808-030200-82b0e5e66c5ef336eff7814e687319e3-225552793",
 });
-const url = "https://us-central1-edrfinal.cloudfunctions.net/addVenta";
 
 async function postData(url = "", data = {}) {
   // Default options are marked with *
@@ -59,13 +58,8 @@ export async function POST(request: NextRequest) {
   };
   console.log("payment.status:", payment.status);
   if (payment && payment.status == "approved") {
-    postData(url, datita).then((data) => {
-      console.log(
-        "------------------->",
-        "MANDADO A FIREBASE PA",
-        datita.uid,
-        datita.curso
-      ); // JSON data parsed by `data.json()` call
+    postData(process.env.API_URL, datita).then((data) => {
+      console.log("Lo que respondió Firebase: ", data); // JSON data parsed by `data.json()` call
     });
   }
 
