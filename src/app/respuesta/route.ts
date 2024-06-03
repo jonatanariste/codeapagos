@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-
+export const runtime = "edge";
 import { MercadoPagoConfig, Payment } from "mercadopago";
 
 const mercadopago = new MercadoPagoConfig({
@@ -9,7 +9,7 @@ const mercadopago = new MercadoPagoConfig({
 
 async function postData(url = "", data = {}) {
   // Default options are marked with *
-  console.log("postData-a:", url, data);
+  console.log("postData-a:", url);
   const response = await fetch(url, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
@@ -25,6 +25,7 @@ async function postData(url = "", data = {}) {
     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     body: JSON.stringify(data), // body data type must match "Content-Type" header
   });
+  return response;
 }
 export async function POST(request: NextRequest) {
   const body = await request
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest) {
 
   const payment = await new Payment(mercadopago).get({ id: body.data.id });
 
-  console.log("--------------------->", payment);
+  console.log("Lo que vendimos------->", payment.external_reference);
 
   // console.log("--------------------->", payment.external_reference);
   // console.log("transaction_amount: ", payment.transaction_amount);
@@ -59,7 +60,7 @@ export async function POST(request: NextRequest) {
   console.log("payment.status:", payment.status);
   if (payment && payment.status == "approved") {
     postData(process.env.API_URL, datita).then((data) => {
-      console.log("Lo que respondió Firebase: ", data); // JSON data parsed by `data.json()` call
+      //console.log("Lo que respondió Firebase: ", data); // JSON data parsed by `data.json()` call
     });
   }
 
