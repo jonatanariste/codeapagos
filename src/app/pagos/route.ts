@@ -8,11 +8,10 @@ const client = new MercadoPagoConfig({
 });
 
 export async function POST(request: NextRequest) {
-  console.log("--------------------------- ME LLAMARON");
-
   let data = await request.formData();
   const json = JSON.stringify(Object.fromEntries(data));
   const datos = JSON.parse(json);
+  console.log("--------------------------- ME LLAMARON", datos);
 
   const preference = await new Preference(client).create({
     body: {
@@ -33,6 +32,7 @@ export async function POST(request: NextRequest) {
       auto_return: "approved",
     },
   });
+
   redirect(preference.init_point!);
 
   return Response.json({ success: true });
