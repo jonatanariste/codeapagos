@@ -10,7 +10,7 @@ const url = "https://us-central1-edrfinal.cloudfunctions.net/addVenta";
 
 async function postData(url = "", data = {}) {
   // Default options are marked with *
-  console.log("postData-al-servidor");
+  console.log("postData-al-servidor", data);
   const response = await fetch(url, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
