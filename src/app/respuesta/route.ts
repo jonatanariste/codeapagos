@@ -1,7 +1,6 @@
 import type { NextRequest } from "next/server";
-export const runtime = "edge";
 import { MercadoPagoConfig, Payment } from "mercadopago";
-
+export const dynamic = "force-dynamic";
 const mercadopago = new MercadoPagoConfig({
   accessToken:
     "APP_USR-8928404133394808-030200-82b0e5e66c5ef336eff7814e687319e3-225552793",
